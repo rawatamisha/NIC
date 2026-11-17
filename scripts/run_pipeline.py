@@ -1,17 +1,11 @@
 """
-Phase 1 orchestrator — run_pipeline.py
-
 Scans data/raw_pdfs/ for PDFs, runs each through OCR (src/ingestion/ocr_client.py),
-and writes structured output to data/processed/. This is the Phase 1 deliverable
-per PHASES.md — later phases (chunking, embeddings, summarization, chat) will
-extend this same script rather than replace it.
+and writes structured output to data/processed/.
 
-Design choices, per RULES.md:
 - Skips documents that already have processed output, unless --force is passed
   (cost awareness — avoid re-billing OCR pages unnecessarily).
 - A failure on one document is logged and does NOT stop the batch.
 - Supports --limit for cheap testing on a small sample before a full run
-  (see RULES.md §6 — test on 1-2 docs before a full-batch run).
 
 Usage:
     python scripts/run_pipeline.py
@@ -26,16 +20,15 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-# Allow running as `python scripts/run_pipeline.py` from the project root.
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config import PROCESSED_DIR, RAW_PDF_DIR  # noqa: E402
-from src.ingestion.ocr_client import ocr_document  # noqa: E402
-from src.ingestion.language_detect import detect_language  # noqa: E402
-from src.processing.chunker import chunk_document  # noqa: E402
-from src.processing.summarizer import summarize_document  # noqa: E402
-from src.retrieval.vector_store import DocumentVectorStore  # noqa: E402
-from src.utils.logger import get_logger  # noqa: E402
+from config import PROCESSED_DIR, RAW_PDF_DIR 
+from src.ingestion.ocr_client import ocr_document  
+from src.ingestion.language_detect import detect_language
+from src.processing.chunker import chunk_document 
+from src.processing.summarizer import summarize_document 
+from src.retrieval.vector_store import DocumentVectorStore 
+from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -47,7 +40,7 @@ class PipelineSummary:
     skipped: list[str] = field(default_factory=list)
     summarized: list[str] = field(default_factory=list)
     indexed: list[str] = field(default_factory=list)
-    failed: list[tuple[str, str]] = field(default_factory=list)  # (filename, error)
+    failed: list[tuple[str, str]] = field(default_factory=list) 
 
     def report(self) -> str:
         lines = [
@@ -252,9 +245,7 @@ def main() -> None:
 
     print(summary.report())
 
-    # Non-zero exit code if anything failed, so this plays nicely with CI/scripts later.
     sys.exit(1 if summary.failed else 0)
-
 
 if __name__ == "__main__":
     main()

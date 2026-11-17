@@ -5,7 +5,7 @@ Handles: job creation, upload, polling, download, retries on transient failure,
 and reassembly of multi-batch documents (long PDFs split by pdf_splitter.py)
 back into a single structured Markdown output with correct page numbering.
 
-See ARCHITECTURE.md §2.1, RULES.md §4 (error handling), PHASES.md Phase 1.
+See ARCHITECTURE.md §2.1, RULES.md §4 (error handling).
 """
 
 import os
@@ -32,7 +32,7 @@ load_dotenv()
 _API_KEY = os.getenv("SARVAM_API_KEY")
 if not _API_KEY:
     raise EnvironmentError(
-        "SARVAM_API_KEY not set. Copy .env.example to .env and add your key."
+        "SARVAM_API_KEY not set. Please create a .env file with your Sarvam API key or set the environment variable."
     )
 
 _client = SarvamAI(api_subscription_key=_API_KEY)

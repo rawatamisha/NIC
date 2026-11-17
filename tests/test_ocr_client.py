@@ -1,5 +1,5 @@
 """
-Minimal tests for the ingestion layer. Per RULES.md §8, these should not
+Minimal tests for the ingestion layer. These should not
 require a live Sarvam API call — mock the network boundary instead.
 """
 

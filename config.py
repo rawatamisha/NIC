@@ -1,8 +1,3 @@
-"""
-Central configuration for the Document Intelligence MVP.
-All paths, model names, and tunable thresholds live here — see RULES.md §7.
-"""
-
 from pathlib import Path
 
 # --- Paths ---

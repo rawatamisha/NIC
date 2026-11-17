@@ -1,5 +1,5 @@
 """
-Local ChromaDB wrapper for Phase 2 document indexing.
+Local ChromaDB wrapper for document indexing.
 """
 
 from __future__ import annotations

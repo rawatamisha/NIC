@@ -184,13 +184,20 @@ def _run_summary_job(source_text: str, source_file: str, language: str) -> Docum
     """Calls Sarvam chat completions and parses the structured summary."""
     try:
         response = _client.chat.completions(
-            messages=_build_summary_prompt(source_text, language, source_file),
+            messages=_build_summary_prompt(source_text[:3000], language, source_file),
             model=SARVAM_SUMMARY_MODEL,
             temperature=0.0,
-            max_tokens=1200,
+            max_tokens=4000,
             request_options={"timeout_in_seconds": SARVAM_API_TIMEOUT_SECONDS},
         )
         response_text = _response_to_text(response)
+
+        print("SARVAM FINISH REASON:",
+            getattr(response.choices[0], "finish_reason", None))
+
+        print("SARVAM RESPONSE PREVIEW:",
+            repr(response_text[:500]))
+
         payload = json.loads(_extract_json_payload(response_text))
         return DocumentSummary.model_validate(payload)
     except TimeoutError as exc:

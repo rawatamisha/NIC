@@ -1,6 +1,6 @@
 """
 Shared logger for the whole pipeline. Every module should import get_logger()
-rather than creating its own logging config — see RULES.md §4 (no silent failures).
+rather than creating its own logging config(no silent failures).
 """
 
 import logging

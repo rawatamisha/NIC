@@ -1,8 +1,5 @@
 """
 Lightweight language detection for processed OCR text.
-
-Phase 2 uses this to route summary language and to keep metadata consistent
-with the source document's primary language.
 """
 
 from __future__ import annotations
